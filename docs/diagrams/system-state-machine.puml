@@ -1,0 +1,73 @@
+@startuml
+
+title Smart Museum Artifact Conservation System
+
+[*] --> STARTUP
+
+STARTUP : Perform startup checks
+STARTUP --> MONITORING : Sensors and control devices verified
+
+STARTUP --> SAFE_SHUTDOWN : Required component failure
+
+MONITORING : Monitor artifact and environment
+
+MONITORING --> MONITORING : Artifact placed / identification recorded
+MONITORING --> MONITORING : Load environmental profile
+
+MONITORING --> CONSERVATION_ACTIVE : Door closed and profile loaded
+
+CONSERVATION_ACTIVE : Normal conservation operation
+
+CONSERVATION_ACTIVE --> MONITORING : Door opened
+
+MONITORING --> CONSERVATION_ACTIVE : Door closed and conditions verified
+
+CONSERVATION_ACTIVE --> TEMP_CORRECTION : Temperature outside range
+
+TEMP_CORRECTION : Issue temperature correction
+
+TEMP_CORRECTION --> ENVIRONMENT_VERIFICATION : Correction issued
+
+ENVIRONMENT_VERIFICATION : Verify sensor readings
+
+ENVIRONMENT_VERIFICATION --> CONSERVATION_ACTIVE : Condition restored
+
+ENVIRONMENT_VERIFICATION --> PROTECTION_MODE : Recovery period exceeded
+
+PROTECTION_MODE : Protect artifact
+PROTECTION_MODE : Reduce light
+PROTECTION_MODE : Activate additional controls
+PROTECTION_MODE : Alert operator
+
+PROTECTION_MODE --> MONITORING : Conditions verified
+
+CONSERVATION_ACTIVE --> VIBRATION_RESPONSE : Significant vibration
+
+VIBRATION_RESPONSE : Suspend risky activities
+VIBRATION_RESPONSE : Monitor vibration
+
+VIBRATION_RESPONSE --> VIBRATION_STABILIZATION : Vibration below threshold
+
+VIBRATION_STABILIZATION : Verify required stabilization period
+
+VIBRATION_STABILIZATION --> CONSERVATION_ACTIVE : Stabilization confirmed
+
+VIBRATION_STABILIZATION --> VIBRATION_RESPONSE : Threshold exceeded again
+
+CONSERVATION_ACTIVE --> EMERGENCY_POWER : Primary power lost
+MONITORING --> EMERGENCY_POWER : Primary power lost
+PROTECTION_MODE --> EMERGENCY_POWER : Primary power lost
+VIBRATION_RESPONSE --> EMERGENCY_POWER : Primary power lost
+
+EMERGENCY_POWER : Check emergency power availability
+
+EMERGENCY_POWER --> MONITORING : Emergency power available
+EMERGENCY_POWER --> SAFE_SHUTDOWN : Emergency power unavailable
+
+SAFE_SHUTDOWN : Record incident
+SAFE_SHUTDOWN : Stop non-essential activities
+SAFE_SHUTDOWN : Preserve system information
+
+SAFE_SHUTDOWN --> [*]
+
+@enduml
